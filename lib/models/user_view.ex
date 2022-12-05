@@ -1,4 +1,4 @@
-defmodule Me.Models.UserView do
+defmodule Models.UserView do
   @fields [
     :about,
     :lanyard_id,

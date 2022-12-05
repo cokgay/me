@@ -1,4 +1,4 @@
-defmodule Me.Models.User do
+defmodule Models.User do
   @fields [
     :username,
     :password,

@@ -1,4 +1,4 @@
-defmodule Me.Models.UserLink do
+defmodule Models.UserLink do
   @fields [
     :display,
     :title,

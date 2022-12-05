@@ -3,9 +3,16 @@ defmodule Me.Application do
 
   def start(_type, _args) do
     children = [
+      Plug.Cowboy.child_spec(
+        scheme: :http,
+        plug: Router,
+        options: [
+          port: port()
+        ]
+      ),
       %{
-        id: Me.Database.Supervisor,
-        start: {Me.Database.Supervisor, :start_link, []}
+        id: Database.Supervisor,
+        start: {Database.Supervisor, :start_link, []}
       }
     ]
 
@@ -13,4 +20,6 @@ defmodule Me.Application do
 
     Supervisor.start_link(children, opts)
   end
+
+  defp port, do: Application.get_env(:me, :port) || 4201
 end

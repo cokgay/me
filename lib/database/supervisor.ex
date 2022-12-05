@@ -1,4 +1,4 @@
-defmodule Me.Database.Supervisor do
+defmodule Database.Supervisor do
   def init(state), do: {:ok, state}
 
   def start_link() do
