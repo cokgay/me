@@ -13,8 +13,8 @@ defmodule Me.Database.Supervisor do
     {:reply, cursor, state}
   end
 
-  def handle_call({:insert_one, collection, data}, _from, state) do
-    cursor = Mongo.insert_one(state, collection, data)
-    {:reply, cursor, state}
+  def handle_cast({:insert_one, collection, data}, _from, state) do
+    Mongo.insert_one(state, collection, data)
+    {:noreply, state}
   end
 end
