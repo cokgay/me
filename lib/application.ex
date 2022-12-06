@@ -1,5 +1,6 @@
 defmodule Me.Application do
   use Application
+  require Logger
 
   def start(_type, _args) do
     children = [
@@ -17,6 +18,8 @@ defmodule Me.Application do
     ]
 
     opts = [strategy: :one_for_one, name: Me.Supervisor]
+
+    Logger.debug("Server started at: 0.0.0.0:#{port()} !")
 
     Supervisor.start_link(children, opts)
   end

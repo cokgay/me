@@ -15,5 +15,6 @@ defmodule Router do
 
   plug(:dispatch)
 
+  forward("/api", to: Router.Api)
   forward("/", to: Router.Page)
 end
