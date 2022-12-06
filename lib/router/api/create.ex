@@ -1,6 +1,7 @@
 defmodule Router.Api.Create do
   alias Plug.Conn
   alias Utils.Turnstile
+  alias Utils.Hash
   alias Database.Client
 
   def handle(%{body_params: params} = conn, :check_params) do
@@ -101,8 +102,8 @@ defmodule Router.Api.Create do
         } = conn,
         :create_user
       ) do
-    hashed_password = :crypto.hash(:sha256, password) |> Base.encode16()
-    token = Base.encode64(:crypto.hash(:sha256, captcha_token <> hashed_password))
+    hashed_password = Hash.hash(password)
+    token = :crypto.hash(:sha256, captcha_token <> hashed_password) |> Base.encode64()
 
     user = %{
       username: username,
