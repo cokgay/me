@@ -8,7 +8,6 @@ jobs:
   build:
     name: Build container image and push to ghcr.io
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
        - name: Checkout repository
          uses: actions/checkout@v3
