@@ -1,6 +1,5 @@
 defmodule Router.Api.Edit do
   alias Plug.Conn
-  alias Database.Client
 
   @themes ["ArtBox", "Black", "MacOS", "Classic"]
   @displays [
@@ -174,13 +173,13 @@ defmodule Router.Api.Edit do
   end
 
   def handle(%{body_params: %{"token" => token, "data" => data}} = conn, :update_data) do
-    result = Client.find_one("users", %{token: token})
+    result = Database.Client.find_one("users", %{token: token})
 
     if result === nil do
       Conn.send_resp(conn, 404, "User not found")
     else
       new_user = %{result | "view" => data}
-      Client.replace_one("users", result, new_user)
+      Database.Client.replace_one("users", result, new_user)
 
       Conn.send_resp(conn, 204, "")
     end

@@ -14,6 +14,10 @@ defmodule Me.Application do
       %{
         id: Database.Supervisor,
         start: {Database.Supervisor, :start_link, []}
+      },
+      %{
+        id: RenderCache.Supervisor,
+        start: {RenderCache.Supervisor, :start_link, []}
       }
     ]
 

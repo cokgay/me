@@ -1,7 +1,6 @@
 defmodule Router.Api.Auth do
   alias Plug.Conn
   alias Utils.Hash
-  alias Database.Client
 
   def handle(%{body_params: params} = conn, :check_params) do
     cond do
@@ -20,7 +19,7 @@ defmodule Router.Api.Auth do
   end
 
   def handle(%{body_params: %{"username" => username}} = conn, :find_user) do
-    result = Client.find_one("users", %{username: username})
+    result = Database.Client.find_one("users", %{username: username})
 
     if result === nil do
       Conn.send_resp(conn, 404, "User not found")

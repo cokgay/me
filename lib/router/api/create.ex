@@ -2,7 +2,6 @@ defmodule Router.Api.Create do
   alias Plug.Conn
   alias Utils.Turnstile
   alias Utils.Hash
-  alias Database.Client
 
   def handle(%{body_params: params} = conn, :check_params) do
     cond do
@@ -83,7 +82,7 @@ defmodule Router.Api.Create do
   end
 
   def handle(%{body_params: %{"username" => username}} = conn, :check_exists) do
-    result = Client.find_one("users", %{username: username})
+    result = Database.Client.find_one("users", %{username: username})
 
     if result === nil do
       handle(conn, :create_user)
@@ -118,7 +117,7 @@ defmodule Router.Api.Create do
       }
     }
 
-    Client.insert_one("users", user)
+    Database.Client.insert_one("users", user)
     Conn.resp(conn, 200, token)
   end
 end

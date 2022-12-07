@@ -25,6 +25,7 @@ defmodule Me.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.4"},
       {:httpoison, "~> 1.8"},
+      {:solid, "~> 0.14.0"},
       {:mongodb_driver, "~> 1.0.0"}
     ]
   end
