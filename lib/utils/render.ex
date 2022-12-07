@@ -19,4 +19,26 @@ defmodule Utils.Render do
     |> Plug.Conn.put_resp_content_type("application/json")
     |> Plug.Conn.send_resp(status, encoded)
   end
+
+  def encode_data(value) when is_binary(value) do
+    value
+    |> String.replace("&", "&amp;")
+    |> String.replace("<", "&lt;")
+    |> String.replace(">", "&gt;")
+    |> String.replace("\"", "&quot;")
+    |> String.replace("'", "&#x27;")
+  end
+
+  def encode_data(value) when is_list(value) do
+    Enum.map(value, fn value ->
+      encode_data(value)
+    end)
+  end
+
+  def encode_data(value) when is_map(value) do
+    Enum.map(value, fn {key, value} ->
+      {key, encode_data(value)}
+    end)
+    |> Enum.into(%{})
+  end
 end

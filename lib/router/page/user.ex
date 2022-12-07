@@ -13,6 +13,12 @@ defmodule Router.Page.User do
 
   def handle(conn, %{"username" => username, "view" => view}, :process_user) do
     theme_name = String.downcase(view["theme"])
-    Render.send_file(conn, "/themes/#{theme_name}.liquid", view |> Map.put("username", username))
+
+    safe_render =
+      view
+      |> Map.put("username", username)
+      |> Render.encode_data()
+
+    Render.send_file(conn, "/themes/#{theme_name}.liquid", safe_render)
   end
 end
