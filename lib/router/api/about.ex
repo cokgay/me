@@ -3,7 +3,7 @@ defmodule Router.Api.About do
   alias Utils.Render
   alias Database.Client
 
-  def handle(%{body_params: params} = conn, :check_params) do
+  def handle(%{query_params: params} = conn, :check_params) do
     cond do
       params === nil ->
         Conn.send_resp(conn, 400, "No parameter found for body")
@@ -19,7 +19,7 @@ defmodule Router.Api.About do
     end
   end
 
-  def handle(%{body_params: %{"username" => username}} = conn, :fetch_from_username) do
+  def handle(%{query_params: %{"username" => username}} = conn, :fetch_from_username) do
     result = Client.find_one("users", %{username: username})
 
     if result === nil do
@@ -29,7 +29,7 @@ defmodule Router.Api.About do
     end
   end
 
-  def handle(%{body_params: %{"token" => token}} = conn, :fetch_from_token) do
+  def handle(%{query_params: %{"token" => token}} = conn, :fetch_from_token) do
     result = Client.find_one("users", %{token: token})
 
     if result === nil do

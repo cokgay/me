@@ -14,7 +14,12 @@ defmodule Database.Supervisor do
   end
 
   def handle_cast({:insert_one, collection, data}, state) do
-    Mongo.insert_one(state, collection, data)
+    Mongo.insert_one!(state, collection, data)
+    {:noreply, state}
+  end
+
+  def handle_cast({:replace_one, collection, old, new}, state) do
+    Mongo.replace_one!(state, collection, old, new)
     {:noreply, state}
   end
 end
