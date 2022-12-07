@@ -10,32 +10,32 @@ jobs:
     if: github.event_name == 'push'
     steps:
        - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
+         uses: actions/checkout@v3
+         with:
+           submodules: recursive
 
-      - name: Log in to ghcr.io
-        uses: redhat-actions/podman-login@v1
-        with:
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
-          registry: ghcr.io/cokgay
+       - name: Log in to ghcr.io
+         uses: redhat-actions/podman-login@v1
+         with:
+           username: ${{ github.actor }}
+           password: ${{ github.token }}
+           registry: ghcr.io/cokgay
 
-      - name: Trim commit SHA
-        run: echo "GITHUB_SHA_CUT=$(echo $GITHUB_SHA | cut -c1-7)" >>$GITHUB_ENV
+       - name: Trim commit SHA
+         run: echo "GITHUB_SHA_CUT=$(echo $GITHUB_SHA | cut -c1-7)" >>$GITHUB_ENV
 
-      - name: Build container image
-        id: build-image
-        uses: redhat-actions/buildah-build@v2
-        with:
-          image: me
-          tags: main main-${{ env.GITHUB_SHA_CUT }}
-          containerfiles: |
-            ./Containerfile
+       - name: Build container image
+         id: build-image
+         uses: redhat-actions/buildah-build@v2
+         with:
+           image: me
+           tags: main main-${{ env.GITHUB_SHA_CUT }}
+           containerfiles: |
+             ./Containerfile
 
-      - name: Push to ghcr.io
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ steps.build-image.outputs.tags }}
-          registry: ghcr.io/cokgay
+       - name: Push to ghcr.io
+         uses: redhat-actions/push-to-registry@v2
+         with:
+           image: ${{ steps.build-image.outputs.image }}
+           tags: ${{ steps.build-image.outputs.tags }}
+           registry: ghcr.io/cokgay
