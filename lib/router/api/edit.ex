@@ -30,11 +30,6 @@ defmodule Router.Api.Edit do
     "thirdColor",
     "foregroundColor"
   ]
-  @link_keys [
-    "display",
-    "title",
-    "url"
-  ]
 
   def handle(%{body_params: params} = conn, :check_params) do
     cond do
@@ -107,6 +102,9 @@ defmodule Router.Api.Edit do
         %{"title" => title, "url" => url, "display" => display} = link
 
         cond do
+          link |> Map.keys() |> Enum.count() !== 3 ->
+            throw(:wrong_format)
+
           not is_binary(title) || not is_binary(url) || not is_binary(display) ->
             throw(:wrong_format)
 
