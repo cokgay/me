@@ -27,3 +27,6 @@ me-*.tar
 
 # Elixir LS
 /.elixir_ls/
+
+# Environment variables
+.env
