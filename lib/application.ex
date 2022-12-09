@@ -8,7 +8,7 @@ defmodule Me.Application do
         scheme: :http,
         plug: Router,
         options: [
-          port: port()
+          port: 4201
         ]
       ),
       %{
@@ -23,10 +23,8 @@ defmodule Me.Application do
 
     opts = [strategy: :one_for_one, name: Me.Supervisor]
 
-    Logger.debug("Server started at: 0.0.0.0:#{port()} !")
+    Logger.debug("Server started at port: 4201")
 
     Supervisor.start_link(children, opts)
   end
-
-  defp port, do: Application.get_env(:me, :port) || 4201
 end

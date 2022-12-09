@@ -14,12 +14,9 @@ RUN mix release
 
 FROM docker.io/elixir:1.14.2-slim
 
-ARG PORT=4200
-ENV PORT=${PORT}
+COPY --from=builder /app/_build/prod/rel/me /release/me
+COPY --from=builder /app/www /www
 
-COPY --from=builder /app/_build/prod/rel/me /opt/me
-COPY --from=builder /app/www /opt/www
+EXPOSE 4201
 
-EXPOSE ${PORT}
-
-ENTRYPOINT [ "/opt/me/bin/me", "start" ]
+ENTRYPOINT [ "/release/me/bin/me", "start" ]
