@@ -120,7 +120,8 @@ defmodule Router.Api.Edit do
           display === "Email" && not String.starts_with?(url, "mailto:") ->
             throw(:url_invalid)
 
-          not (String.starts_with?(url, "https://") or String.starts_with?(url, "http://")) ->
+          display !== "Email" &&
+              not (String.starts_with?(url, "https://") or String.starts_with?(url, "http://")) ->
             throw(:url_invalid)
 
           true ->
